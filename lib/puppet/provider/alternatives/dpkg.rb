@@ -10,6 +10,9 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   end
 
   # Generate a hash of hashes containing a link name and associated properties
+  #
+  # This is structured as {'key' => {attributes}} to do fast lookups on entries
+  #
   # @return [Hash<String, Hash<Symbol, String>>]
   def self.all
     output = update('--get-selections')

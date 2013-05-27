@@ -12,8 +12,8 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
 
   let(:stub_selections) do
     {
-      'editor'   => {:source => 'manual', :path => '/usr/bin/vim.tiny'},
-      'aptitude' => {:source => 'auto', :path => '/usr/bin/aptitude-curses'},
+      'editor'   => {:mode => 'manual', :path => '/usr/bin/vim.tiny'},
+      'aptitude' => {:mode => 'auto', :path => '/usr/bin/aptitude-curses'},
     }
   end
 
@@ -31,8 +31,8 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
       subject { described_class.all }
 
       it { should be_a Hash }
-      it { subject['editor'].should == {:source => 'manual', :path => '/usr/bin/vim.tiny'} }
-      it { subject['aptitude'].should == {:source => 'auto', :path => '/usr/bin/aptitude-curses'} }
+      it { subject['editor'].should == {:mode => 'manual', :path => '/usr/bin/vim.tiny'} }
+      it { subject['aptitude'].should == {:mode => 'auto', :path => '/usr/bin/aptitude-curses'} }
     end
   end
 

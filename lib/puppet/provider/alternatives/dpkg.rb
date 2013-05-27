@@ -2,6 +2,8 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
 
   commands :update => '/usr/sbin/update-alternatives'
 
+  has_feature :mode
+
   # Return all instances for this provider
   #
   # @return [Array<Puppet::Type::Alternatives::ProviderDpkg>] A list of all current provider instances
@@ -18,8 +20,8 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--get-selections')
 
     output.split(/\n/).inject({}) do |hash, line|
-      name, source, path = line.split(/\s+/)
-      hash[name] = {:source => source, :path => path}
+      name, mode, path = line.split(/\s+/)
+      hash[name] = {:path => path, :mode => mode}
       hash
     end
   end
@@ -27,12 +29,33 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   # Retrieve the current path link
   def path
     name = @resource.value(:name)
-    self.class.all[name][:path]
+    if (attrs = self.class.all[name])
+      attrs[:path]
+    end
   end
 
   # @param [String] newpath The path to use as the new alternative link
   def path=(newpath)
     name = @resource.value(:name)
     update('--set', name, newpath)
+  end
+
+  # @return [String] The alternative mode
+  def mode
+    output = update('--display', @resource.value(:name))
+    first = output.split("\n").first
+
+    if first.match /auto mode/
+      'auto'
+    elsif first.match /manual mode/
+      'manual'
+    else
+      raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
+    end
+  end
+
+  # Set the mode to auto.
+  def mode=(_)
+    update('--auto', @resource.value(:name))
   end
 end

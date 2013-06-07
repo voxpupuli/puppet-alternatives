@@ -21,12 +21,13 @@ Puppet::Type.newtype(:alternatives) do
     newvalue('manual')
   end
 
-  validate do
-    case self[:mode]
-    when 'auto'
-      raise ArgumentError, "Mode cannot be 'auto' if a path is given" if self[:path]
-    when 'manual'
-      raise ArgumentError, "Mode cannot be 'manual' without a path" unless self[:path]
-    end
-  end
+  # Turns out this isn't a valid hook.
+  #validate do
+  #  case self[:mode]
+  #  when 'auto'
+  #    raise ArgumentError, "Mode cannot be 'auto' if a path is given" if self[:path]
+  #  when 'manual'
+  #    raise ArgumentError, "Mode cannot be 'manual' without a path" unless self[:path]
+  #  end
+  #end
 end

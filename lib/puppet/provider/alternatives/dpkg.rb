@@ -1,5 +1,6 @@
 Puppet::Type.type(:alternatives).provide(:dpkg) do
 
+  confine :osfamily => 'Debian'
   commands :update => '/usr/sbin/update-alternatives'
 
   has_feature :mode

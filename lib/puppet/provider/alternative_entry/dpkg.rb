@@ -4,25 +4,24 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   commands :update  => '/usr/sbin/update-alternatives'
 
   def create
-    raise NotImplementedError
     update('--install',
-      @property_hash[:altname],
-      @property_hash[:altlink],
-      @property_hash[:name],
-      @property_hash[:priority]
+      @resource.value(:altlink),
+      @resource.value(:altname),
+      @resource.value(:name),
+      @resource.value(:priority)
     )
   end
 
   def exists?
-    output = update('--list', @property_hash[:altname])
+    output = update('--list', @resource.value(:altname))
 
     output.split(/\n/).map(&:strip).any? do |line|
-      line == @property_hash[:name]
+      line == @resource.value(:name)
     end
   end
 
   def destroy
-    update('--remove', @property_hash[:altname], @property_hash[:name])
+    update('--remove', @resource.value(:altname), @resource.value(:name))
   end
 
   def self.instances

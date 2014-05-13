@@ -2,6 +2,8 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
 
   confine :osfamily => 'Debian'
   commands :update  => '/usr/sbin/update-alternatives'
+  
+  mk_resource_methods
 
   def create
     update('--install',
@@ -50,12 +52,6 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
       {:altname => altname, :altlink => altlink, :name => path, :priority => priority}
     end
   end
-
-
-  def name; @property_hash[:name]; end
-  def altname; @property_hash[:altname]; end
-  def altlink; @property_hash[:altlink]; end
-  def priority; @property_hash[:priority]; end
 
   def name=(new_name)
     rebuild do

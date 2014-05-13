@@ -15,7 +15,11 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   end
 
   def exists?
-    output = update('--list', @resource.value(:altname))
+    # we cannot fetch @resource.value(:altname) if running 'puppet resource alternative_entry'
+    temp_altname = altname
+    temp_altname = @resource.value(:altname) if @resource.value(:altname)
+
+    output = update('--list', temp_altname)
 
     output.split(/\n/).map(&:strip).any? do |line|
       line == @resource.value(:name)

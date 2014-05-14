@@ -44,6 +44,14 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
 
     entries
   end
+  
+  def self.prefetch(resources)
+    instances.each do |prov|
+      if resource = resources[prov.name]
+        resource.provider = prov
+      end
+    end
+  end
 
   ALT_QUERY_REGEX = %r[Alternative: (.*?)$.Priority: (.*?)$]m
 

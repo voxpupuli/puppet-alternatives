@@ -1,6 +1,6 @@
 Puppet::Type.type(:alternatives).provide(:dpkg) do
 
-  commands :update => '/usr/sbin/update-alternatives'
+  commands :update => 'update-alternatives'
 
   has_feature :mode
 

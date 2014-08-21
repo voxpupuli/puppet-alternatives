@@ -75,6 +75,3 @@ Contact
 
   * Source code: https://github.com/adrienthebo/puppet-alternatives
   * Issue tracker: https://github.com/adrienthebo/puppet-alternatives/issues
-
-If you have questions or concerns about this module, contact finch on #puppet
-on Freenode, or email adrien@puppetlabs.com.

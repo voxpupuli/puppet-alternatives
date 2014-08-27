@@ -3,8 +3,7 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
   confine    :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
-  commands :alternatives => '/usr/sbin/alternatives',
-           :ls           => '/bin/ls'
+  commands :alternatives => '/usr/sbin/alternatives'
 
   # Return all instances for this provider
   #
@@ -19,7 +18,7 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
   #
   # @return [Hash<String, Hash<Symbol, String>>]
   def self.all
-    output = ls('/var/lib/alternatives/')
+    output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
     output.split(/\n/).inject({}) do |hash, name|
       path = File.readlink('/etc/alternatives/' + name)

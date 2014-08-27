@@ -3,8 +3,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   confine    :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
-  commands :alternatives => '/usr/sbin/alternatives',
-           :ls           => '/bin/ls'
+  commands :alternatives => '/usr/sbin/alternatives'
 
   mk_resource_methods
 
@@ -19,7 +18,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
   def exists?
     query_altname = @resource.value(:altname) || altname
-    output = ls('/var/lib/alternatives/').split(' ')
+    output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
     output.each do |altname|
       altname == @resource.value(:name)
@@ -31,7 +30,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   end
 
   def self.instances
-    output = ls('/var/lib/alternatives/').split(' ')
+    output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
     entries = []
  

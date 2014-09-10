@@ -20,7 +20,7 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
   def self.all
     output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
-    output.split(/\n/).inject({}) do |hash, name|
+    output.inject({}) do |hash, name|
       path = File.readlink('/etc/alternatives/' + name)
       hash[name] = {:path => path}
       hash

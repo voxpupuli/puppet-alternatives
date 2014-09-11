@@ -1,14 +1,14 @@
-Puppet::Type.type(:alternative_entry).provide(:dpkg) do
+Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
-  confine :osfamily => 'Debian'
-  defaultfor :operatingsystem => [:debian, :ubuntu]
+  confine    :osfamily => :redhat
+  defaultfor :osfamily => :redhat
 
-  commands :update  => '/usr/sbin/update-alternatives'
-  
+  commands :alternatives => '/usr/sbin/alternatives'
+
   mk_resource_methods
 
   def create
-    update('--install',
+    alternatives('--install',
       @resource.value(:altlink),
       @resource.value(:altname),
       @resource.value(:name),
@@ -17,25 +17,24 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   end
 
   def exists?
-    # we cannot fetch @resource.value(:altname) if running 'puppet resource alternative_entry'
-    output = update('--list', @resource.value(:altname) || altname)
+    query_altname = @resource.value(:altname) || altname
+    output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
-    output.split(/\n/).map(&:strip).any? do |line|
-      line == @resource.value(:name)
+    output.each do |altname|
+      altname == @resource.value(:name)
     end
   end
 
   def destroy
-    update('--remove', @resource.value(:altname), @resource.value(:name))
+    alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exists?('/var/lib/alternatives/' + @resource.value(:altname))
   end
 
   def self.instances
-    output = update('--get-selections')
+    output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
     entries = []
-
-    output.each_line do |line|
-      altname = line.split(/\s+/).first
+ 
+    output.each do |altname|
       query_alternative(altname).each do |alt|
         entries << new(alt)
       end
@@ -43,7 +42,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
 
     entries
   end
-  
+
   def self.prefetch(resources)
     instances.each do |prov|
       if resource = resources[prov.name]
@@ -52,14 +51,13 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     end
   end
 
-  ALT_QUERY_REGEX = %r[Alternative: (.*?)$.Priority: (.*?)$]m
+  ALT_RPM_QUERY_REGEX = %r[ link currently points to (.*?)$.* - priority (.*?)$]m
 
   def self.query_alternative(altname)
-    output = update('--query', altname)
+    output = alternatives('--display', altname)
 
-    altlink = output.match(/Link: (.*)$/)[1]
-
-    output.scan(ALT_QUERY_REGEX).map do |(path, priority)|
+    output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
+      altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
       {:altname => altname, :altlink => altlink, :name => path, :priority => priority}
     end
   end

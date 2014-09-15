@@ -3,7 +3,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   confine :osfamily => 'Debian'
   defaultfor :operatingsystem => [:debian, :ubuntu]
 
-  commands :update  => '/usr/sbin/update-alternatives'
+  commands :update => 'update-alternatives'
   
   mk_resource_methods
 

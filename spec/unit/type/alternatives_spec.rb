@@ -24,4 +24,29 @@ describe Puppet::Type.type(:alternatives) do
       }.to raise_error Puppet::Error, /Mode cannot be 'manual'/
     end
   end
+
+  describe "when autorequiring resources" do
+    it "should autorequire alternative_entry" do
+      alternative_entry = Puppet::Type.type(:alternative_entry).new(
+        :name     => '/usr/pgsql-9.1/bin/pg_config',
+        :ensure   => :present,
+        :altlink  => '/usr/bin/pg_config',
+        :altname  => 'pgsql-pg_config',
+        :priority => '910'
+      )
+      alternatives = described_class.new(
+        :name => 'pgsql-pg_config',
+        :path => '/usr/pgsql-9.1/bin/pg_config'
+      )
+
+      catalog = Puppet::Resource::Catalog.new
+      catalog.add_resource alternative_entry
+      catalog.add_resource alternatives
+      req = alternatives.autorequire
+
+      expect(req).to have_exactly(1).item
+      expect(req[0].source).to eq alternative_entry
+      expect(req[0].target).to eq alternatives
+    end
+  end
 end

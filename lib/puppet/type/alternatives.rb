@@ -30,4 +30,8 @@ Puppet::Type.newtype(:alternatives) do
   #    raise ArgumentError, "Mode cannot be 'manual' without a path" unless self[:path]
   #  end
   #end
+
+  autorequire(:alternative_entry) do
+    self[:path]
+  end
 end

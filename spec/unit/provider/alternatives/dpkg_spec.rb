@@ -63,5 +63,16 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
       subject.expects(:update).with('--set', 'editor', '/bin/nano')
       subject.path = '/bin/nano'
     end
+
+    it "#mode=(:auto) calls update-alternatives --auto" do
+      subject.expects(:update).with('--auto', 'editor')
+      subject.mode = :auto
+    end
+
+    it "#mode=(:manual) calls update-alternatives --set with current value" do
+      subject.expects(:path).returns('/usr/bin/vim.tiny')
+      subject.expects(:update).with('--set', 'editor', '/usr/bin/vim.tiny')
+      subject.mode = :manual
+    end
   end
 end

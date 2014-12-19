@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+0.3.0
+-----
+
+  * New RPM based providers for alternatives and alternative_entry
+  * Debian based distributions use `update-alternatives` based on $PATH
+  * The alternatives type now autorequires matching alternate_entry types
+  * dpkg provider explicitly sets the mode property to manual
+  * alternative_entry can check for alernative entries for a non-existent entry
+
 0.2.0
 -----
 

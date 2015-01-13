@@ -2,9 +2,9 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
 
   confine :osfamily => 'Debian'
   defaultfor :operatingsystem => [:debian, :ubuntu]
-
-  commands :update => 'update-alternatives'
   
+  commands :update => 'update-alternatives'
+
   mk_resource_methods
 
   def create
@@ -30,7 +30,11 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   end
 
   def destroy
-    update('--remove', @resource.value(:altname), @resource.value(:name))
+    begin
+        alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exists?('/var/lib/alternatives/' + @resource.value(:altname))
+    rescue
+        puts "Alternative does not already exist."
+    end
   end
 
   def self.instances

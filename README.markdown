@@ -67,6 +67,18 @@ Using the alternatives resource in a manifest:
 
 - - -
 
+Creating a new alternative entry:
+
+    alternative_entry {'/usr/bin/gcc-4.4':
+        ensure   => present,
+        altlink  => '/usr/bin/gcc',
+        altname  => 'gcc',
+        priority => 10,
+        require  => Package['gcc-4.4-multilib'],
+    }
+
+- - -
+
 This module should work on any Debian and RHEL based distribution.
 
 Contact
@@ -74,3 +86,4 @@ Contact
 
   * Source code: https://github.com/adrienthebo/puppet-alternatives
   * Issue tracker: https://github.com/adrienthebo/puppet-alternatives/issues
+

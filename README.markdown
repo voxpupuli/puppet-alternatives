@@ -1,7 +1,7 @@
 puppet-alternatives
 ===================
 
-Manage alternatives symlinks.
+Manage debian alternatives symlinks.
 
 Synopsis
 --------
@@ -67,10 +67,26 @@ Using the alternatives resource in a manifest:
 
 - - -
 
-This module should work on any Debian and RHEL based distribution.
+Creating a new alternative entry:
+
+    alternative_entry {'/usr/bin/gcc-4.4':
+        ensure   => present,
+        altlink  => '/usr/bin/gcc',
+        altname  => 'gcc',
+        priority => 10,
+        require  => Package['gcc-4.4-multilib'],
+    }
+
+- - -
+
+This module should work on any Debian based distribution, or really any
+distribution that has a reasonable `update-alternatives` file.
 
 Contact
 -------
 
   * Source code: https://github.com/adrienthebo/puppet-alternatives
   * Issue tracker: https://github.com/adrienthebo/puppet-alternatives/issues
+
+If you have questions or concerns about this module, contact finch on #puppet
+on Freenode, or email adrien@puppetlabs.com.

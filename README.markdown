@@ -72,5 +72,5 @@ This module should work on any Debian and RHEL based distribution.
 Contact
 -------
 
-  * Source code: https://github.com/adrienthebo/puppet-alternatives
-  * Issue tracker: https://github.com/adrienthebo/puppet-alternatives/issues
+  * Source code: https://github.com/puppet-community/puppet-alternatives
+  * Issue tracker: https://github.com/puppet-community/puppet-alternatives/issues

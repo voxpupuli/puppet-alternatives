@@ -1,7 +1,7 @@
 Puppet::Type.type(:alternatives).provide(:rpm) do
 
-  confine    :osfamily => :redhat
-  defaultfor :osfamily => :redhat
+  confine    :osfamily => [:redhat, :linux]
+  defaultfor :osfamily => [:redhat, :linux]
 
   commands :alternatives => '/usr/sbin/alternatives'
 

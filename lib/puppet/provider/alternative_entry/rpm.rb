@@ -26,7 +26,11 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   end
 
   def destroy
-    alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exists?('/var/lib/alternatives/' + @resource.value(:altname))
+    begin
+        alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exists?('/var/lib/alternatives/' + @resource.value(:altname))
+    rescue
+        puts "Alternative does not already exist."
+    end
   end
 
   def self.instances

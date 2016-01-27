@@ -1,6 +1,5 @@
 Puppet::Type.type(:alternatives).provide(:rpm) do
-
-  confine    :osfamily => :redhat
+  confine :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
   commands :alternatives => '/usr/sbin/alternatives'
@@ -19,10 +18,12 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
   # @return [Hash<String, Hash<Symbol, String>>]
   def self.all
     output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
-
+    # Ruby 1.8.7 does not have each_with_object
+    # rubocop:disable Style/EachWithObject
     output.inject({}) do |hash, name|
+      # rubocop:enable Style/EachWithObject
       path = File.readlink('/etc/alternatives/' + name)
-      hash[name] = {:path => path}
+      hash[name] = { :path => path }
       hash
     end
   end

@@ -1,5 +1,4 @@
 Puppet::Type.type(:alternatives).provide(:dpkg) do
-
   confine :osfamily => :debian
   defaultfor :operatingsystem => [:debian, :ubuntu]
 
@@ -21,10 +20,12 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   # @return [Hash<String, Hash<Symbol, String>>]
   def self.all
     output = update('--get-selections')
-
+    # Ruby 1.8.7 does not have each_with_object
+    # rubocop:disable Style/EachWithObject
     output.split(/\n/).inject({}) do |hash, line|
+      # rubocop:enable Style/EachWithObject
       name, mode, path = line.split(/\s+/)
-      hash[name] = {:path => path, :mode => mode}
+      hash[name] = { :path => path, :mode => mode }
       hash
     end
   end
@@ -32,7 +33,9 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   # Retrieve the current path link
   def path
     name = @resource.value(:name)
+    # rubocop:disable Style/GuardClause
     if (attrs = self.class.all[name])
+      # rubocop:enable Style/GuardClause
       attrs[:path]
     end
   end
@@ -48,12 +51,12 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first.match /auto mode/
+    if first.match(/auto mode/)
       'auto'
-    elsif first.match /manual mode/
+    elsif first.match(/manual mode/)
       'manual'
     else
-      raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
+      fail Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
     end
   end
 

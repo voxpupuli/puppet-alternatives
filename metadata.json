@@ -4,9 +4,9 @@
   "author": "Adrien Thebo <adrien@somethingsinistral.net",
   "summary": "Maintain symbolic links determining default commands",
   "license": "Apache-2.0",
-  "source": "https://github.com/puppet-community/puppet-alternatives",
-  "project_page": "https://github.com/puppet-community/puppet-alternatives",
-  "issues_url": "https://github.com/puppet-community/puppet-alternatives",
+  "source": "https://github.com/voxpupuli/puppet-alternatives",
+  "project_page": "https://github.com/voxpupuli/puppet-alternatives",
+  "issues_url": "https://github.com/voxpupuli/puppet-alternatives",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",

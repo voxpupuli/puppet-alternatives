@@ -1,6 +1,5 @@
 Puppet::Type.type(:alternative_entry).provide(:rpm) do
-
-  confine    :osfamily => :redhat
+  confine :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
   commands :alternatives => '/usr/sbin/alternatives'
@@ -9,15 +8,14 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
   def create
     alternatives('--install',
-      @resource.value(:altlink),
-      @resource.value(:altname),
-      @resource.value(:name),
-      @resource.value(:priority)
+                 @resource.value(:altlink),
+                 @resource.value(:altname),
+                 @resource.value(:name),
+                 @resource.value(:priority)
     )
   end
 
   def exists?
-    query_altname = @resource.value(:altname) || altname
     output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
     output.each do |altname|
@@ -26,14 +24,14 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   end
 
   def destroy
-    alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exists?('/var/lib/alternatives/' + @resource.value(:altname))
+    alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exist?('/var/lib/alternatives/' + @resource.value(:altname))
   end
 
   def self.instances
     output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
 
     entries = []
- 
+
     output.each do |altname|
       query_alternative(altname).each do |alt|
         entries << new(alt)
@@ -45,20 +43,22 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
   def self.prefetch(resources)
     instances.each do |prov|
+      # rubocop:disable Lint/AssignmentInCondition
       if resource = resources[prov.name]
+        # rubocop:enable Lint/AssignmentInCondition
         resource.provider = prov
       end
     end
   end
 
-  ALT_RPM_QUERY_REGEX = %r[ link currently points to (.*?)$.* - priority (.*?)$]m
+  ALT_RPM_QUERY_REGEX = / link currently points to (.*?)$.* - priority (.*?)$/m
 
   def self.query_alternative(altname)
     output = alternatives('--display', altname)
 
     output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
       altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
-      {:altname => altname, :altlink => altlink, :name => path, :priority => priority}
+      { :altname => altname, :altlink => altlink, :name => path, :priority => priority }
     end
   end
 
@@ -88,7 +88,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
   private
 
-  def rebuild(&block)
+  def rebuild(&_block)
     destroy
     yield
     create

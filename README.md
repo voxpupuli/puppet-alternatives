@@ -84,5 +84,5 @@ This module should work on any Debian and RHEL based distribution.
 Contact
 -------
 
-  * Source code: https://github.com/puppet-community/puppet-alternatives
-  * Issue tracker: https://github.com/puppet-community/puppet-alternatives/issues
+  * [Source code](https://github.com/voxpupuli/puppet-alternatives)
+  * [Issue tracker](https://github.com/voxpupuli/puppet-alternatives/issues)

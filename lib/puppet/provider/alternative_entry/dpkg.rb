@@ -1,18 +1,17 @@
 Puppet::Type.type(:alternative_entry).provide(:dpkg) do
-
   confine :osfamily => 'Debian'
   defaultfor :operatingsystem => [:debian, :ubuntu]
 
   commands :update => 'update-alternatives'
-  
+
   mk_resource_methods
 
   def create
     update('--install',
-      @resource.value(:altlink),
-      @resource.value(:altname),
-      @resource.value(:name),
-      @resource.value(:priority)
+           @resource.value(:altlink),
+           @resource.value(:altname),
+           @resource.value(:name),
+           @resource.value(:priority)
     )
   end
 
@@ -47,16 +46,18 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
 
     entries
   end
-  
+
   def self.prefetch(resources)
     instances.each do |prov|
+      # rubocop:disable Lint/AssignmentInCondition
       if resource = resources[prov.name]
+        # rubocop:enable Lint/AssignmentInCondition
         resource.provider = prov
       end
     end
   end
 
-  ALT_QUERY_REGEX = %r[Alternative: (.*?)$.Priority: (.*?)$]m
+  ALT_QUERY_REGEX = /Alternative: (.*?)$.Priority: (.*?)$/m
 
   def self.query_alternative(altname)
     output = update('--query', altname)
@@ -64,7 +65,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     altlink = output.match(/Link: (.*)$/)[1]
 
     output.scan(ALT_QUERY_REGEX).map do |(path, priority)|
-      {:altname => altname, :altlink => altlink, :name => path, :priority => priority}
+      { :altname => altname, :altlink => altlink, :name => path, :priority => priority }
     end
   end
 
@@ -94,7 +95,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
 
   private
 
-  def rebuild(&block)
+  def rebuild(&_block)
     destroy
     yield
     create

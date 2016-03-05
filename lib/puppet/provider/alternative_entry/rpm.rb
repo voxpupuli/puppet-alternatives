@@ -24,9 +24,13 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   end
 
   def destroy
+    # rubocop:disable Style/RedundantBegin
     begin
+      # rubocop::enable Style/RedundantBegin
       alternatives('--remove', @resource.value(:altname), @resource.value(:name))
+      # rubocop:disable Lint/HandleExceptions
     rescue
+      # rubocop:enable Lint/HandleExceptions
     end
   end
 

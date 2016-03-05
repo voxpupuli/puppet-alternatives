@@ -46,6 +46,5 @@ describe Puppet::Type.type(:alternatives).provider(:rpm) do
       subject.expects(:alternatives).with('--set', 'editor', '/bin/nano')
       subject.path = '/bin/nano'
     end
-
   end
 end

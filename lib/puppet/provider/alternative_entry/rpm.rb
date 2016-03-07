@@ -24,7 +24,14 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   end
 
   def destroy
-    alternatives('--remove', @resource.value(:altname), @resource.value(:name)) if File.exist?('/var/lib/alternatives/' + @resource.value(:altname))
+    # rubocop:disable Style/RedundantBegin
+    begin
+      # rubocop::enable Style/RedundantBegin
+      alternatives('--remove', @resource.value(:altname), @resource.value(:name))
+      # rubocop:disable Lint/HandleExceptions
+    rescue
+      # rubocop:enable Lint/HandleExceptions
+    end
   end
 
   def self.instances

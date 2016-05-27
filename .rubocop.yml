@@ -1,10 +1,14 @@
+require: rubocop-rspec
 AllCops:
+  TargetRubyVersion: 1.9
   Include:
     - ./**/*.rb
   Exclude:
     - vendor/**/*
+    - .vendor/**/*
     - pkg/**/*
     - spec/fixtures/**/*
+    - files/**/*
 
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
@@ -26,19 +30,25 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Enabled: false
 
+# Module length is not necessarily an indicator of code quality
+Metrics/ModuleLength:
+  Enabled: false
+
 # Class length is not necessarily an indicator of code quality
 Metrics/ClassLength:
   Enabled: false
 
 # dealbreaker:
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
   Enabled: false
-Style/ClosingParenthesisIndentation:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
-# we still support ruby 1.8
-Style/HashSyntax:
-  Enabled: false
+Style/ClosingParenthesisIndentation:
+  Enabled: true
+
+Style/BlockDelimiters:
+  Enabled: true
 
 Lint/AmbiguousRegexpLiteral:
   Enabled: true
@@ -61,4 +71,14 @@ Style/BlockDelimiters:
   Enabled: False
 
 Style/MultilineBlockLayout:
+  Enabled: False
+
+# Rspec
+
+# We don't use rspec in this way
+RSpec/DescribeClass:
+  Enabled: False
+
+# Example length is not necessarily an indicator of code quality
+RSpec/ExampleLength:
   Enabled: False

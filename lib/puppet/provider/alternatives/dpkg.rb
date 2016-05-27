@@ -1,8 +1,8 @@
 Puppet::Type.type(:alternatives).provide(:dpkg) do
-  confine :osfamily => :debian
-  defaultfor :operatingsystem => [:debian, :ubuntu]
+  confine osfamily: :debian
+  defaultfor operatingsystem: [:debian, :ubuntu]
 
-  commands :update => 'update-alternatives'
+  commands update: 'update-alternatives'
 
   has_feature :mode
 
@@ -10,7 +10,7 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   #
   # @return [Array<Puppet::Type::Alternatives::ProviderDpkg>] A list of all current provider instances
   def self.instances
-    all.map { |name, attributes| new(:name => name, :path => attributes[:path]) }
+    all.map { |name, attributes| new(name: name, path: attributes[:path]) }
   end
 
   # Generate a hash of hashes containing a link name and associated properties
@@ -25,7 +25,7 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output.split(/\n/).inject({}) do |hash, line|
       # rubocop:enable Style/EachWithObject
       name, mode, path = line.split(/\s+/)
-      hash[name] = { :path => path, :mode => mode }
+      hash[name] = { path: path, mode: mode }
       hash
     end
   end
@@ -51,12 +51,12 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first.match(/auto mode/)
+    if first =~ /auto mode/
       'auto'
-    elsif first.match(/manual mode/)
+    elsif first =~ /manual mode/
       'manual'
     else
-      fail Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
+      raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
     end
   end
 

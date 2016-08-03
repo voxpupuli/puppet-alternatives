@@ -1,11 +1,11 @@
 Puppet::Type.newtype(:alternative_entry) do
   ensurable
 
-  newparam(:name, :isnamevar => true) do
+  newparam(:name, isnamevar: true) do
     desc 'The path to the actual alternative'
 
     validate do |path|
-      fail ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
+      raise ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
     end
   end
 
@@ -13,7 +13,7 @@ Puppet::Type.newtype(:alternative_entry) do
     desc 'The name of the generic symlink for this alternative entry'
 
     validate do |path|
-      fail ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
+      raise ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
     end
   end
 

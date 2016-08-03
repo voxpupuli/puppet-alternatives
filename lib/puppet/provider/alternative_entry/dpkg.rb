@@ -1,8 +1,8 @@
 Puppet::Type.type(:alternative_entry).provide(:dpkg) do
-  confine :osfamily => 'Debian'
-  defaultfor :operatingsystem => [:debian, :ubuntu]
+  confine osfamily: 'Debian'
+  defaultfor operatingsystem: [:debian, :ubuntu]
 
-  commands :update => 'update-alternatives'
+  commands update: 'update-alternatives'
 
   mk_resource_methods
 
@@ -11,8 +11,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
            @resource.value(:altlink),
            @resource.value(:altname),
            @resource.value(:name),
-           @resource.value(:priority)
-    )
+           @resource.value(:priority))
   end
 
   def exists?
@@ -65,7 +64,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     altlink = output.match(/Link: (.*)$/)[1]
 
     output.scan(ALT_QUERY_REGEX).map do |(path, priority)|
-      { :altname => altname, :altlink => altlink, :name => path, :priority => priority }
+      { altname: altname, altlink: altlink, name: path, priority: priority }
     end
   end
 

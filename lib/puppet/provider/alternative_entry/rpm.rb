@@ -1,8 +1,8 @@
 Puppet::Type.type(:alternative_entry).provide(:rpm) do
-  confine :osfamily => :redhat
-  defaultfor :osfamily => :redhat
+  confine osfamily: :redhat
+  defaultfor osfamily: :redhat
 
-  commands :alternatives => '/usr/sbin/alternatives'
+  commands alternatives: '/usr/sbin/alternatives'
 
   mk_resource_methods
 
@@ -11,8 +11,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
                  @resource.value(:altlink),
                  @resource.value(:altname),
                  @resource.value(:name),
-                 @resource.value(:priority)
-    )
+                 @resource.value(:priority))
   end
 
   def exists?
@@ -65,7 +64,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
     output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
       altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
-      { :altname => altname, :altlink => altlink, :name => path, :priority => priority }
+      { altname: altname, altlink: altlink, name: path, priority: priority }
     end
   end
 

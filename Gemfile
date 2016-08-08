@@ -54,12 +54,12 @@ end
 
 
 if facterversion = ENV['FACTER_GEM_VERSION']
-gem 'facter', facterversion.to_s, :require => false, :groups => [:test]
+  gem 'facter', facterversion.to_s, :require => false, :groups => [:test]
 else
-gem 'facter', :require => false, :groups => [:test]
+  gem 'facter', :require => false, :groups => [:test]
 end
 
-ENV['PUPPET_VERSION'].nil? ? puppetversion = '3.8.4' : puppetversion = ENV['PUPPET_VERSION'].to_s
+ENV['PUPPET_VERSION'].nil? ? puppetversion = '~> 4.0' : puppetversion = ENV['PUPPET_VERSION'].to_s
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 
-# vim:ft=ruby
+# vim: syntax=ruby

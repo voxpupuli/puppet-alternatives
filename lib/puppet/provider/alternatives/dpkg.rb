@@ -22,7 +22,7 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--get-selections')
     # Ruby 1.8.7 does not have each_with_object
     # rubocop:disable Style/EachWithObject
-    output.split(%r{\n}).inject({}) do |hash, line|
+    output.split(%r{\n}).reduce({}) do |hash, line|
       # rubocop:enable Style/EachWithObject
       name, mode, path = line.split(%r{\s+})
       hash[name] = { path: path, mode: mode }

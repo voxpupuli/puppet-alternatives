@@ -20,7 +20,7 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
     output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
     # Ruby 1.8.7 does not have each_with_object
     # rubocop:disable Style/EachWithObject
-    output.inject({}) do |hash, name|
+    output.reduce({}) do |hash, name|
       # rubocop:enable Style/EachWithObject
       path = File.readlink('/etc/alternatives/' + name)
       hash[name] = { path: path }

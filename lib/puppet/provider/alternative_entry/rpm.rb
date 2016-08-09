@@ -58,7 +58,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
     end
   end
 
-  ALT_RPM_QUERY_REGEX = / link currently points to (.*?)$.* - priority (.*?)$/m
+  ALT_RPM_QUERY_REGEX = %r{ link currently points to (.*?)$.* - priority (.*?)$}m
 
   def self.query_alternative(altname)
     output = alternatives('--display', altname)

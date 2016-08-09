@@ -22,9 +22,9 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--get-selections')
     # Ruby 1.8.7 does not have each_with_object
     # rubocop:disable Style/EachWithObject
-    output.split(/\n/).inject({}) do |hash, line|
+    output.split(%r{\n}).inject({}) do |hash, line|
       # rubocop:enable Style/EachWithObject
-      name, mode, path = line.split(/\s+/)
+      name, mode, path = line.split(%r{\s+})
       hash[name] = { path: path, mode: mode }
       hash
     end
@@ -51,9 +51,9 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first.match(/auto mode/)
+    if first.match(%r{auto mode})
       'auto'
-    elsif first.match(/manual mode/)
+    elsif first.match(%r{manual mode})
       'manual'
     else
       fail Puppet::Error, "Could not determine if #{self} is in auto or manual mode"

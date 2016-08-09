@@ -12,7 +12,7 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
   let(:stub_selections) do
     {
       'editor'   => { mode: 'manual', path: '/usr/bin/vim.tiny' },
-      'aptitude' => { mode: 'auto', path: '/usr/bin/aptitude-curses' },
+      'aptitude' => { mode: 'auto', path: '/usr/bin/aptitude-curses' }
     }
   end
 

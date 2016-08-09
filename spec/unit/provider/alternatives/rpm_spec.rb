@@ -12,7 +12,7 @@ describe Puppet::Type.type(:alternatives).provider(:rpm) do
   let(:stub_selections) do
     {
       'editor' => { mode: 'manual', path: '/usr/bin/vim.tiny' },
-      'mta'    => { mode: 'manual', path: '/usr/sbin/sendmail' },
+      'mta'    => { mode: 'manual', path: '/usr/sbin/sendmail' }
     }
   end
 

@@ -11,8 +11,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
            @resource.value(:altlink),
            @resource.value(:altname),
            @resource.value(:name),
-           @resource.value(:priority)
-    )
+           @resource.value(:priority))
   end
 
   def exists?

@@ -9,7 +9,7 @@ Puppet::Type.newtype(:alternatives) do
     desc 'The path of the desired source for the given alternative'
 
     validate do |path|
-      fail ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
+      raise ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
     end
   end
 

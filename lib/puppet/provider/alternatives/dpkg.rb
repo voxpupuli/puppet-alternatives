@@ -56,7 +56,7 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     elsif first =~ %r{manual mode}
       'manual'
     else
-      fail Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
+      raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
     end
   end
 

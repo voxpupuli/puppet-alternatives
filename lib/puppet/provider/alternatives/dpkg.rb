@@ -51,9 +51,9 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first.match(%r{auto mode})
+    if first =~ %r{auto mode}
       'auto'
-    elsif first.match(%r{manual mode})
+    elsif first =~ %r{manual mode}
       'manual'
     else
       fail Puppet::Error, "Could not determine if #{self} is in auto or manual mode"

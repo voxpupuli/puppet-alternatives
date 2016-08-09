@@ -25,7 +25,7 @@ describe Puppet::Type.type(:alternatives) do
   end
 
   describe 'when autorequiring resources' do
-    it 'should autorequire alternative_entry' do
+    it 'autorequires alternative_entry' do
       alternative_entry = Puppet::Type.type(:alternative_entry).new(
         name: '/usr/pgsql-9.1/bin/pg_config',
         ensure: :present,

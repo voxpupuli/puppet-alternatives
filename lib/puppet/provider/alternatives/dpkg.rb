@@ -1,8 +1,8 @@
 Puppet::Type.type(:alternatives).provide(:dpkg) do
-  confine :osfamily => :debian
-  defaultfor :operatingsystem => [:debian, :ubuntu]
+  confine osfamily: :debian
+  defaultfor operatingsystem: [:debian, :ubuntu]
 
-  commands :update => 'update-alternatives'
+  commands update: 'update-alternatives'
 
   has_feature :mode
 
@@ -10,7 +10,7 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   #
   # @return [Array<Puppet::Type::Alternatives::ProviderDpkg>] A list of all current provider instances
   def self.instances
-    all.map { |name, attributes| new(:name => name, :path => attributes[:path]) }
+    all.map { |name, attributes| new(name: name, path: attributes[:path]) }
   end
 
   # Generate a hash of hashes containing a link name and associated properties
@@ -22,10 +22,10 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--get-selections')
     # Ruby 1.8.7 does not have each_with_object
     # rubocop:disable Style/EachWithObject
-    output.split(/\n/).inject({}) do |hash, line|
+    output.split(%r{\n}).reduce({}) do |hash, line|
       # rubocop:enable Style/EachWithObject
-      name, mode, path = line.split(/\s+/)
-      hash[name] = { :path => path, :mode => mode }
+      name, mode, path = line.split(%r{\s+})
+      hash[name] = { path: path, mode: mode }
       hash
     end
   end
@@ -51,12 +51,12 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first.match(/auto mode/)
+    if first =~ %r{auto mode}
       'auto'
-    elsif first.match(/manual mode/)
+    elsif first =~ %r{manual mode}
       'manual'
     else
-      fail Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
+      raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
     end
   end
 

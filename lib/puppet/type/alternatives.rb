@@ -1,7 +1,7 @@
 Puppet::Type.newtype(:alternatives) do
   feature :mode, 'The alternative can provide auto and manual modes'
 
-  newparam(:name, :isnamevar => true) do
+  newparam(:name, isnamevar: true) do
     desc 'The name of the alternative.'
   end
 
@@ -9,11 +9,11 @@ Puppet::Type.newtype(:alternatives) do
     desc 'The path of the desired source for the given alternative'
 
     validate do |path|
-      fail ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
+      raise ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
     end
   end
 
-  newproperty(:mode, :required_features => [:mode]) do
+  newproperty(:mode, required_features: [:mode]) do
     desc 'Use the automatic option for this alternative'
 
     newvalue('auto')

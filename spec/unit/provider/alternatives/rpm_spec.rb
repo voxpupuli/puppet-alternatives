@@ -11,8 +11,8 @@ describe Puppet::Type.type(:alternatives).provider(:rpm) do
 
   let(:stub_selections) do
     {
-      'editor' => { :mode => 'manual', :path => '/usr/bin/vim.tiny' },
-      'mta'    => { :mode => 'manual', :path => '/usr/sbin/sendmail' },
+      'editor' => { mode: 'manual', path: '/usr/bin/vim.tiny' },
+      'mta'    => { mode: 'manual', path: '/usr/sbin/sendmail' }
     }
   end
 
@@ -28,9 +28,9 @@ describe Puppet::Type.type(:alternatives).provider(:rpm) do
   end
 
   describe 'instances' do
-    subject { described_class.new(:name => 'editor') }
+    subject { described_class.new(name: 'editor') }
 
-    let(:resource) { Puppet::Type.type(:alternatives).new(:name => 'editor') }
+    let(:resource) { Puppet::Type.type(:alternatives).new(name: 'editor') }
 
     before do
       Puppet::Type.type(:alternatives).stubs(:defaultprovider).returns described_class

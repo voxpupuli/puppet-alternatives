@@ -1,14 +1,14 @@
 Puppet::Type.type(:alternatives).provide(:rpm) do
-  confine :osfamily => :redhat
-  defaultfor :osfamily => :redhat
+  confine osfamily: :redhat
+  defaultfor osfamily: :redhat
 
-  commands :alternatives => '/usr/sbin/alternatives'
+  commands alternatives: '/usr/sbin/alternatives'
 
   # Return all instances for this provider
   #
   # @return [Array<Puppet::Type::Alternatives::ProviderDpkg>] A list of all current provider instances
   def self.instances
-    all.map { |name, attributes| new(:name => name, :path => attributes[:path]) }
+    all.map { |name, attributes| new(name: name, path: attributes[:path]) }
   end
 
   # Generate a hash of hashes containing a link name and associated properties
@@ -20,10 +20,10 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
     output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
     # Ruby 1.8.7 does not have each_with_object
     # rubocop:disable Style/EachWithObject
-    output.inject({}) do |hash, name|
+    output.reduce({}) do |hash, name|
       # rubocop:enable Style/EachWithObject
       path = File.readlink('/etc/alternatives/' + name)
-      hash[name] = { :path => path }
+      hash[name] = { path: path }
       hash
     end
   end

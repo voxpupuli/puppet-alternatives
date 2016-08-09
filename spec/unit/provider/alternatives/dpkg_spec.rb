@@ -11,8 +11,8 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
 
   let(:stub_selections) do
     {
-      'editor'   => { :mode => 'manual', :path => '/usr/bin/vim.tiny' },
-      'aptitude' => { :mode => 'auto', :path => '/usr/bin/aptitude-curses' },
+      'editor'   => { mode: 'manual', path: '/usr/bin/vim.tiny' },
+      'aptitude' => { mode: 'auto', path: '/usr/bin/aptitude-curses' },
     }
   end
 
@@ -30,8 +30,8 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
       subject { described_class.all }
 
       it { is_expected.to be_a Hash }
-      it { expect(subject['editor']).to eq(:mode => 'manual', :path => '/usr/bin/vim.tiny') }
-      it { expect(subject['aptitude']).to eq(:mode => 'auto', :path => '/usr/bin/aptitude-curses') }
+      it { expect(subject['editor']).to eq(mode: 'manual', path: '/usr/bin/vim.tiny') }
+      it { expect(subject['aptitude']).to eq(mode: 'auto', path: '/usr/bin/aptitude-curses') }
     end
   end
 
@@ -44,9 +44,9 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
   end
 
   describe 'instances' do
-    subject { described_class.new(:name => 'editor') }
+    subject { described_class.new(name: 'editor') }
 
-    let(:resource) { Puppet::Type.type(:alternatives).new(:name => 'editor') }
+    let(:resource) { Puppet::Type.type(:alternatives).new(name: 'editor') }
 
     before do
       Puppet::Type.type(:alternatives).stubs(:defaultprovider).returns described_class

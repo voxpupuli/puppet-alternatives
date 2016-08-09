@@ -1,7 +1,7 @@
 Puppet::Type.newtype(:alternative_entry) do
   ensurable
 
-  newparam(:name, :isnamevar => true) do
+  newparam(:name, isnamevar: true) do
     desc 'The path to the actual alternative'
 
     validate do |path|

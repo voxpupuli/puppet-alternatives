@@ -1,7 +1,7 @@
 Puppet::Type.newtype(:alternatives) do
   feature :mode, 'The alternative can provide auto and manual modes'
 
-  newparam(:name, :isnamevar => true) do
+  newparam(:name, isnamevar: true) do
     desc 'The name of the alternative.'
   end
 
@@ -13,7 +13,7 @@ Puppet::Type.newtype(:alternatives) do
     end
   end
 
-  newproperty(:mode, :required_features => [:mode]) do
+  newproperty(:mode, required_features: [:mode]) do
     desc 'Use the automatic option for this alternative'
 
     newvalue('auto')

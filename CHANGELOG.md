@@ -1,10 +1,11 @@
-## 2016-08-12 Release 1.0.0
+## 2016-08-12 Release 1.0.1
 
  * Modulesync with latest voxpupuli defaults
  * Drop of ruby183 support
  * new aternative_entry with rpm provider
  * Enable explicitly setting mode property to manual
  * First release under the Voxpupuli namespace! Migrated from Adrien Thebo
+ * Rerelease of 1.0.0, which didn't make it to the forge
 
 
 ## 2014-12-19 Release 0.3.0

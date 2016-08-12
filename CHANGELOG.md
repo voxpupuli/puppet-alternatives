@@ -1,3 +1,8 @@
+## 2016-08-12 Release 1.0.1
+
+ * Rerelease of 1.0.0, which didn't make it to the forge
+
+
 ## 2016-08-12 Release 1.0.0
 
  * Modulesync with latest voxpupuli defaults

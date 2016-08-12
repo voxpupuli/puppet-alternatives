@@ -1,6 +1,6 @@
 {
   "name": "puppet-alternatives",
-  "version": "1.0.1",
+  "version": "1.0.2-rc0",
   "author": "Voxpupuli",
   "summary": "Maintain symbolic links determining default commands",
   "license": "Apache-2.0",

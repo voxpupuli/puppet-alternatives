@@ -1,8 +1,13 @@
-CHANGELOG
-=========
+## 2016-08-12 Release 1.0.0
 
-0.3.0
------
+ * Modulesync with latest voxpupuli defaults
+ * Drop of ruby183 support
+ * new aternative_entry with rpm provider
+ * Enable explicitly setting mode property to manual
+ * First release under the Voxpupuli namespace! Migrated from Adrien Thebo
+
+
+## 2014-12-19 Release 0.3.0
 
   * New RPM based providers for alternatives and alternative_entry
   * Debian based distributions use `update-alternatives` based on $PATH
@@ -10,8 +15,8 @@ CHANGELOG
   * dpkg provider explicitly sets the mode property to manual
   * alternative_entry can check for alernative entries for a non-existent entry
 
-0.2.0
------
+
+## 2014-08-21 Release 0.2.0
 
   * New type: alternative_entry
   * The alternatives type now has the `mode` property to use the automatic
@@ -19,12 +24,12 @@ CHANGELOG
   - The update-alternatives binary is no longer hardcoded to use
     /usr/sbin/update-alternatives
 
-## Thanks
+### Thanks
 
 Thanks to Michael Moll and jakov Sosic for their work on this release.
 
-0.1.1
------
+
+## 2013-07-16 Release 0.1.1
 
 This is a backwards compatible bugfix release.
 

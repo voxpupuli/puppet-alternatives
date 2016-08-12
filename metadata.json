@@ -1,7 +1,7 @@
 {
   "name": "puppet-alternatives",
-  "version": "0.3.0",
-  "author": "Adrien Thebo <adrien@somethingsinistral.net",
+  "version": "1.0.0",
+  "author": "Voxpupuli",
   "summary": "Maintain symbolic links determining default commands",
   "license": "Apache-2.0",
   "source": "https://github.com/voxpupuli/puppet-alternatives",

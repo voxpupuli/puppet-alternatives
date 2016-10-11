@@ -25,26 +25,30 @@ describe Puppet::Type.type(:alternatives) do
   end
 
   describe 'when autorequiring resources' do
-    it 'autorequires alternative_entry' do
-      alternative_entry = Puppet::Type.type(:alternative_entry).new(
-        name: '/usr/pgsql-9.1/bin/pg_config',
-        ensure: :present,
-        altlink: '/usr/bin/pg_config',
-        altname: 'pgsql-pg_config',
-        priority: '910'
-      )
-      alternatives = described_class.new(
-        name: 'pgsql-pg_config',
-        path: '/usr/pgsql-9.1/bin/pg_config'
-      )
+    alternative_entry = Puppet::Type.type(:alternative_entry).new(
+      name: '/usr/pgsql-9.1/bin/pg_config',
+      ensure: :present,
+      altlink: '/usr/bin/pg_config',
+      altname: 'pgsql-pg_config',
+      priority: '910'
+    )
+    alternatives = described_class.new(
+      name: 'pgsql-pg_config',
+      path: '/usr/pgsql-9.1/bin/pg_config'
+    )
 
-      catalog = Puppet::Resource::Catalog.new
-      catalog.add_resource alternative_entry
-      catalog.add_resource alternatives
-      req = alternatives.autorequire
+    catalog = Puppet::Resource::Catalog.new
+    catalog.add_resource alternative_entry
+    catalog.add_resource alternatives
+    req = alternatives.autorequire
 
+    it 'is equal' do
       expect(req.size).to eq(1)
+    end
+    it 'has matching source' do
       expect(req[0].source).to eq alternative_entry
+    end
+    it 'has matching target' do
       expect(req[0].target).to eq alternatives
     end
   end

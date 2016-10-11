@@ -16,9 +16,6 @@ describe Puppet::Type.type(:alternatives).provider(:rpm) do
     }
   end
 
-  describe '.all' do
-  end
-
   describe '.instances' do
     it 'delegates to .all' do
       described_class.expects(:all).returns(stub_selections)

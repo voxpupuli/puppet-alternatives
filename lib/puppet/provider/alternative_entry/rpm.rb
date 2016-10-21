@@ -57,7 +57,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
     end
   end
 
-  ALT_RPM_QUERY_REGEX = %r|^(.*\/[^\/]*) - priority (\w+)$|
+  ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) - priority (\w+)$}
 
   def self.query_alternative(altname)
     output = alternatives('--display', altname)

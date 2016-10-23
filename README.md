@@ -1,10 +1,8 @@
-puppet-alternatives
-===================
+# puppet-alternatives
 
 Manage alternatives symlinks.
 
-Synopsis
---------
+## Synopsis
 
 Using `puppet resource` to inspect alternatives
 
@@ -81,8 +79,7 @@ Creating a new alternative entry:
 
 This module should work on any Debian and RHEL based distribution.
 
-Contact
--------
+## Contact
 
-  * [Source code](https://github.com/voxpupuli/puppet-alternatives)
-  * [Issue tracker](https://github.com/voxpupuli/puppet-alternatives/issues)
+* [Source code](https://github.com/voxpupuli/puppet-alternatives)
+* [Issue tracker](https://github.com/voxpupuli/puppet-alternatives/issues)

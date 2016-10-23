@@ -1,5 +1,12 @@
 # puppet-alternatives
 
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-alternatives.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-alternatives)
+[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-alternatives/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-alternatives)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+
 Manage alternatives symlinks.
 
 ## Synopsis

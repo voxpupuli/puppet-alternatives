@@ -2,16 +2,16 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   confine osfamily: :redhat
   defaultfor osfamily: :redhat
 
-  commands alternatives: '/usr/sbin/alternatives'
+  commands update: '/usr/sbin/alternatives'
 
   mk_resource_methods
 
   def create
-    alternatives('--install',
-                 @resource.value(:altlink),
-                 @resource.value(:altname),
-                 @resource.value(:name),
-                 @resource.value(:priority))
+    update('--install',
+           @resource.value(:altlink),
+           @resource.value(:altname),
+           @resource.value(:name),
+           @resource.value(:priority))
   end
 
   def exists?
@@ -26,7 +26,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
     # rubocop:disable Style/RedundantBegin
     begin
       # rubocop::enable Style/RedundantBegin
-      alternatives('--remove', @resource.value(:altname), @resource.value(:name))
+      update('--remove', @resource.value(:altname), @resource.value(:name))
       # rubocop:disable Lint/HandleExceptions
     rescue
       # rubocop:enable Lint/HandleExceptions
@@ -60,10 +60,9 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) - priority (\w+)$}
 
   def self.query_alternative(altname)
-    output = alternatives('--display', altname)
-
+    output = update('--display', altname)
+    altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
     output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
-      altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
       { altname: altname, altlink: altlink, name: path, priority: priority }
     end
   end

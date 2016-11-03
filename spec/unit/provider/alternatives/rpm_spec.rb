@@ -15,8 +15,8 @@ describe Puppet::Type.type(:alternatives).provider(:rpm) do
 
   let(:stub_selections) do
     {
-        'sample'   => { path: '/opt/sample1' },
-        'testcmd'  => { path: '/opt/testcmd1' },
+      'sample'  => { path: '/opt/sample1' },
+      'testcmd' => { path: '/opt/testcmd1' }
     }
   end
 

@@ -25,7 +25,7 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
   #
   # @return [Hash<String, Hash<Symbol, String>>]
   def self.all
-    hash = Hash.new()
+    hash = {}
     list_alternatives.map { |x| File.basename(x) }.each do |name|
       # rubocop:enable Style/EachWithObject
       output = update('--display', name)

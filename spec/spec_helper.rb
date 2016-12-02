@@ -4,9 +4,21 @@ $LOAD_PATH.unshift(dir, dir + 'lib', dir + '../lib')
 require 'mocha/api'
 require 'puppet'
 
-unless RUBY_VERSION =~ %r{^1.9}
+if Dir.exist?(File.expand_path('../../lib', __FILE__)) && RUBY_VERSION !~ %r{^1.9}
   require 'coveralls'
-  Coveralls.wear!
+  require 'simplecov'
+  require 'simplecov-console'
+  SimpleCov.formatters = [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::Console,
+    Coveralls::SimpleCov::Formatter
+  ]
+  SimpleCov.start do
+    track_files 'lib/**/*.rb'
+    add_filter '/spec'
+    add_filter '/vendor'
+    add_filter '/.vendor'
+  end
 end
 
 PROJECT_ROOT = File.expand_path('..', File.dirname(__FILE__))

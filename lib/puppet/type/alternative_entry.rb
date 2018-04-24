@@ -42,23 +42,23 @@ Puppet::Type.newtype(:alternative_entry) do
       [
         %r{^([^:]+)$},
         [
-          [:name],
-        ],
+          [:name]
+        ]
       ],
       [
         %r{^(.*):([a-z]:(/|\\).*)$}i,
         [
           [:name],
-          [:altlink],
-        ],
+          [:altlink]
+        ]
       ],
       [
         %r{^(.*):(.*)$},
         [
           [:name],
-          [:altlink],
-        ],
-      ],
+          [:altlink]
+        ]
+      ]
     ]
   end
 end

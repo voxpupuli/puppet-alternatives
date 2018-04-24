@@ -21,6 +21,11 @@ Puppet::Type.newtype(:alternative_entry) do
     end
   end
 
+  newproperty(:altlink_ro, :readonly => true) do
+    desc 'The name of the generic symlink for this alternative entry as parameter. This is readonly.'
+
+  end
+
   newproperty(:altname) do
     desc 'The name of symlink in the alternatives directory'
   end

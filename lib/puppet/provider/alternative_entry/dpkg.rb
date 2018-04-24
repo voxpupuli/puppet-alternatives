@@ -47,11 +47,13 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   end
 
   def self.prefetch(resources)
+    catalog = resources.values.first.catalog
     instances.each do |prov|
       # rubocop:disable Lint/AssignmentInCondition
-      if resource = resources[prov.name]
-        # rubocop:enable Lint/AssignmentInCondition
-        resource.provider = prov
+      catalog.resources.each do |item|
+        if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
+          item.provider = prov
+        end
       end
     end
   end
@@ -64,7 +66,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     altlink = output.match(%r{Link: (.*)$})[1]
 
     output.scan(ALT_QUERY_REGEX).map do |(path, priority)|
-      { altname: altname, altlink: altlink, name: path, priority: priority }
+      { altname: altname, altlink: altlink, name: path, priority: priority,  }
     end
   end
 

@@ -18,7 +18,6 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
     @property_hash[:ensure] == :present
   end
 
-
   def destroy
     # rubocop:disable Style/RedundantBegin
     begin
@@ -46,16 +45,13 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   def self.prefetch(resources)
     catalog = resources.values.first.catalog
     instances.each do |prov|
-      # rubocop:disable Lint/AssignmentInCondition
       catalog.resources.each do |item|
         if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
           item.provider = prov
         end
       end
-
     end
   end
-
 
   ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) -.*priority (\w+)$}
 

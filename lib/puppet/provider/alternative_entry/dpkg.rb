@@ -47,11 +47,12 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   end
 
   def self.prefetch(resources)
+    catalog = resources.values.first.catalog
     instances.each do |prov|
-      # rubocop:disable Lint/AssignmentInCondition
-      if resource = resources[prov.name]
-        # rubocop:enable Lint/AssignmentInCondition
-        resource.provider = prov
+      catalog.resources.each do |item|
+        if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
+          item.provider = prov
+        end
       end
     end
   end

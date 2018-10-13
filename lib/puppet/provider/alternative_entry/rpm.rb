@@ -15,11 +15,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   end
 
   def exists?
-    output = Dir.glob('/var/lib/alternatives/*').map { |x| File.basename(x) }
-
-    output.each do |altname|
-      altname == @resource.value(:name)
-    end
+    @property_hash[:ensure] == :present
   end
 
   def destroy
@@ -43,27 +39,27 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
         entries << new(alt)
       end
     end
-
     entries
   end
 
   def self.prefetch(resources)
+    catalog = resources.values.first.catalog
     instances.each do |prov|
-      # rubocop:disable Lint/AssignmentInCondition
-      if resource = resources[prov.name]
-        # rubocop:enable Lint/AssignmentInCondition
-        resource.provider = prov
+      catalog.resources.each do |item|
+        if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
+          item.provider = prov
+        end
       end
     end
   end
 
-  ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) - priority (\w+)$}
+  ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) -.*priority (\w+)$}
 
   def self.query_alternative(altname)
     output = update('--display', altname)
     altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
     output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
-      { altname: altname, altlink: altlink, name: path, priority: priority }
+      { altname: altname, altlink: altlink, name: path, priority: priority, altlink_ro: altlink, ensure: :present }
     end
   end
 

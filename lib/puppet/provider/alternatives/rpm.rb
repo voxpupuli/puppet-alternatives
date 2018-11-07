@@ -57,6 +57,10 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
       'auto'
     elsif first =~ %r{manual mode}
       'manual'
+    elsif first =~ %r{status is auto}
+      'auto'
+    elsif first =~ %r{status is manual}
+      'manual'
     else
       raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
     end

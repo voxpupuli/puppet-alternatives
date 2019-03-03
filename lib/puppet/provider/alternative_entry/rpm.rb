@@ -36,7 +36,7 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
 
     output.each do |altname|
       query_alternative(altname).each do |alt|
-        entries << new(alt)
+        entries << new(alt) unless alt.empty?
       end
     end
     entries
@@ -56,10 +56,15 @@ Puppet::Type.type(:alternative_entry).provide(:rpm) do
   ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) -.*priority (\w+)$}
 
   def self.query_alternative(altname)
-    output = update('--display', altname)
-    altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
-    output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
-      { altname: altname, altlink: altlink, name: path, priority: priority, altlink_ro: altlink, ensure: :present }
+    begin
+      output = update('--display', altname)
+      altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
+      output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
+        { altname: altname, altlink: altlink, name: path, priority: priority, altlink_ro: altlink, ensure: :present }
+      end
+    rescue
+      Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
+      {}
     end
   end
 

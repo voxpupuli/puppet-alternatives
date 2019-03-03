@@ -27,11 +27,15 @@ Puppet::Type.type(:alternatives).provide(:rpm) do
   def self.all
     hash = {}
     list_alternatives.map { |x| File.basename(x) }.each do |name|
-      # rubocop:enable Style/EachWithObject
-      output = update('--display', name)
-      mode = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[1]
-      path = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[2]
-      hash[name] = { path: path, mode: mode }
+      begin
+        # rubocop:enable Style/EachWithObject
+        output = update('--display', name)
+        mode = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[1]
+        path = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[2]
+        hash[name] = { path: path, mode: mode }
+      rescue
+        Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
+      end
     end
     hash
   end

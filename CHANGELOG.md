@@ -4,7 +4,25 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.1.0](https://github.com/voxpupuli/puppet-alternatives/tree/v2.1.0) (2018-10-13)
+## [v3.0.0](https://github.com/voxpupuli/puppet-alternatives/tree/v3.0.0) (2019-03-03)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v2.1.0...v3.0.0)
+
+**Breaking changes:**
+
+- modulesync 2.5.1 & drop Puppet 4 [\#92](https://github.com/voxpupuli/puppet-alternatives/pull/92) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- handle broken alternatives entries more gracefully [\#91](https://github.com/voxpupuli/puppet-alternatives/pull/91) ([fraenki](https://github.com/fraenki))
+- Fix mode detection for rpm provider [\#87](https://github.com/voxpupuli/puppet-alternatives/pull/87) ([treydock](https://github.com/treydock))
+
+**Closed issues:**
+
+- Could not determine auto or manual mode [\#80](https://github.com/voxpupuli/puppet-alternatives/issues/80)
+- missing alternatives is not added - it breaks instead [\#54](https://github.com/voxpupuli/puppet-alternatives/issues/54)
+
+## [v2.1.0](https://github.com/voxpupuli/puppet-alternatives/tree/v2.1.0) (2018-10-14)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v2.0.1...v2.1.0)
 

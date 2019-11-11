@@ -35,12 +35,6 @@
         "6",
         "7"
       ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "14.04"
-      ]
     }
   ],
   "requirements": [

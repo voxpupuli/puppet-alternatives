@@ -306,7 +306,7 @@ Style/EmptyLiteral:
   Enabled: True
 
 # Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: False
 
 Style/MethodCallWithoutArgsParentheses:

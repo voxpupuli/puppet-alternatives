@@ -1,4 +1,4 @@
-Puppet::Type.type(:alternatives).provide(:rpm) do
+Puppet::Type.type(:alternatives).provide(:chkconfig) do
   confine osfamily: :redhat
   defaultfor osfamily: :redhat
 

@@ -43,6 +43,13 @@
         "6",
         "7"
       ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "12 SP4",
+        "15 SP1"
+      ]
     }
   ],
   "requirements": [

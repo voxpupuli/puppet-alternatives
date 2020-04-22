@@ -1,6 +1,6 @@
 Puppet::Type.type(:alternative_entry).provide(:dpkg) do
-  confine osfamily: 'Debian'
-  defaultfor operatingsystem: [:debian, :ubuntu]
+  confine osfamily: [:debian, :suse]
+  defaultfor [operatingsystem: [:debian, :ubuntu], osfamily: :suse]
 
   commands update: 'update-alternatives'
 

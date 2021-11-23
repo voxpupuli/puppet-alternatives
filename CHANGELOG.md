@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-alternatives/tree/v4.0.0) (2021-11-23)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v3.0.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop support for Puppet 5 \(EOL\) [\#113](https://github.com/voxpupuli/puppet-alternatives/pull/113) ([smortex](https://github.com/smortex))
+- Drop support for Debian 8, 9; RedHat 6 and derivatives \(EOL\) [\#112](https://github.com/voxpupuli/puppet-alternatives/pull/112) ([smortex](https://github.com/smortex))
+- drop Ubuntu support [\#98](https://github.com/voxpupuli/puppet-alternatives/pull/98) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add support for Debian 11, Ubuntu 18.04 and 20.04 [\#115](https://github.com/voxpupuli/puppet-alternatives/pull/115) ([smortex](https://github.com/smortex))
+- Add support for Puppet 7 [\#114](https://github.com/voxpupuli/puppet-alternatives/pull/114) ([smortex](https://github.com/smortex))
+- renamed provider to fit current status of alternative usage in distributions / Add SLES12/15 support [\#101](https://github.com/voxpupuli/puppet-alternatives/pull/101) ([pseiler](https://github.com/pseiler))
+- add Debian working versions to metadata [\#97](https://github.com/voxpupuli/puppet-alternatives/pull/97) ([trefzer](https://github.com/trefzer))
+
+**Closed issues:**
+
+- SLES 12 and 15 do not work with puppet-alternatives [\#105](https://github.com/voxpupuli/puppet-alternatives/issues/105)
+- check debian support [\#78](https://github.com/voxpupuli/puppet-alternatives/issues/78)
+
+**Merged pull requests:**
+
+- Remove duplicate CONTRIBUTING.md file [\#99](https://github.com/voxpupuli/puppet-alternatives/pull/99) ([dhoppe](https://github.com/dhoppe))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-alternatives/tree/v3.0.0) (2019-03-03)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v2.1.0...v3.0.0)

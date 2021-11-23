@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:alternatives).provide(:chkconfig) do
   confine osfamily: :redhat
   defaultfor osfamily: :redhat
@@ -17,7 +19,7 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
     Dir.glob('/var/lib/alternatives/*')
   end
 
-  ALT_RPM_QUERY_CURRENT_REGEX = %r{status is (\w+)\.\n\slink currently points to (.*\/[^\/]*)\n}
+  ALT_RPM_QUERY_CURRENT_REGEX = %r{status is (\w+)\.\n\slink currently points to (.*/[^/]*)\n}.freeze
 
   # Generate a hash of hashes containing a link name and associated properties
   #
@@ -27,15 +29,12 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
   def self.all
     hash = {}
     list_alternatives.map { |x| File.basename(x) }.each do |name|
-      begin
-        # rubocop:enable Style/EachWithObject
-        output = update('--display', name)
-        mode = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[1]
-        path = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[2]
-        hash[name] = { path: path, mode: mode }
-      rescue
-        Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
-      end
+      output = update('--display', name)
+      mode = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[1]
+      path = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[2]
+      hash[name] = { path: path, mode: mode }
+    rescue StandardError
+      Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
     end
     hash
   end
@@ -57,13 +56,14 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first =~ %r{auto mode}
+    case first
+    when %r{auto mode}
       'auto'
-    elsif first =~ %r{manual mode}
+    when %r{manual mode}
       'manual'
-    elsif first =~ %r{status is auto}
+    when %r{status is auto}
       'auto'
-    elsif first =~ %r{status is manual}
+    when %r{status is manual}
       'manual'
     else
       raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
@@ -73,9 +73,10 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
   # Set the mode to manual or auto.
   # @param [Symbol] newmode Either :auto or :manual for the alternatives mode
   def mode=(newmode)
-    if newmode == :auto
+    case newmode
+    when :auto
       update('--auto', @resource.value(:name))
-    elsif newmode == :manual
+    when :manual
       # No change in value, but sets it to manual
       update('--set', name, path)
     end

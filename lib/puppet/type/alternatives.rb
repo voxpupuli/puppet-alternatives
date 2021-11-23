@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.newtype(:alternatives) do
   feature :mode, 'The alternative can provide auto and manual modes'
 

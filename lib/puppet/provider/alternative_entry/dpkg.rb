@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:alternative_entry).provide(:dpkg) do
-  confine osfamily: [:debian, :suse]
-  defaultfor [operatingsystem: [:debian, :ubuntu], osfamily: :suse]
+  confine osfamily: %i[debian suse]
+  defaultfor [operatingsystem: %i[debian ubuntu], osfamily: :suse]
 
   commands update: 'update-alternatives'
 
@@ -18,7 +20,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     # we cannot fetch @resource.value(:altname) if running 'puppet resource alternative_entry'
     begin
       output = update('--list', @resource.value(:altname) || altname)
-    rescue
+    rescue StandardError
       return false
     end
 
@@ -50,14 +52,12 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     catalog = resources.values.first.catalog
     instances.each do |prov|
       catalog.resources.each do |item|
-        if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
-          item.provider = prov
-        end
+        item.provider = prov if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
       end
     end
   end
 
-  ALT_QUERY_REGEX = %r{Alternative: (.*?)$.Priority: (.*?)$}m
+  ALT_QUERY_REGEX = %r{Alternative: (.*?)$.Priority: (.*?)$}m.freeze
 
   def self.query_alternative(altname)
     output = update('--query', altname)

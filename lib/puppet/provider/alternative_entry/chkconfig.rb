@@ -47,7 +47,7 @@ Puppet::Type.type(:alternative_entry).provide(:chkconfig) do
     end
   end
 
-  ALT_RPM_QUERY_REGEX = %r{^(.*/[^/]*) -.*priority (\w+)$}.freeze
+  ALT_RPM_QUERY_REGEX = %r{^(.*/[^/]*) -.*priority (\w+)$}.freeze # rubocop:disable Lint/ConstantDefinitionInBlock
 
   def self.query_alternative(altname)
     output = update('--display', altname)

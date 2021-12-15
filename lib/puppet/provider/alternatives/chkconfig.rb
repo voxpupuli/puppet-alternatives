@@ -19,7 +19,7 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
     Dir.glob('/var/lib/alternatives/*')
   end
 
-  ALT_RPM_QUERY_CURRENT_REGEX = %r{status is (\w+)\.\n\slink currently points to (.*/[^/]*)\n}.freeze
+  ALT_RPM_QUERY_CURRENT_REGEX = %r{status is (\w+)\.\n\slink currently points to (.*/[^/]*)\n}.freeze # rubocop:disable Lint/ConstantDefinitionInBlock
 
   # Generate a hash of hashes containing a link name and associated properties
   #
@@ -57,13 +57,9 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
     first = output.split("\n").first
 
     case first
-    when %r{auto mode}
+    when %r{auto mode} || %r{status is auto}
       'auto'
-    when %r{manual mode}
-      'manual'
-    when %r{status is auto}
-      'auto'
-    when %r{status is manual}
+    when %r{manual mode} || %r{status is manual}
       'manual'
     else
       raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"

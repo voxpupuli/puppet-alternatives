@@ -57,7 +57,7 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
     end
   end
 
-  ALT_QUERY_REGEX = %r{Alternative: (.*?)$.Priority: (.*?)$}m.freeze
+  ALT_QUERY_REGEX = %r{Alternative: (.*?)$.Priority: (.*?)$}m.freeze # rubocop:disable Lint/ConstantDefinitionInBlock
 
   def self.query_alternative(altname)
     output = update('--query', altname)

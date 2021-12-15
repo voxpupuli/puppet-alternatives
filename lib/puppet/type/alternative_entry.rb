@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.newtype(:alternative_entry) do
   ensurable
 
@@ -33,11 +35,9 @@ Puppet::Type.newtype(:alternative_entry) do
     desc 'The value of the priority of this alternative'
 
     validate do |prio|
-      begin
-        Integer(prio)
-      rescue
-        raise ArgumentError, 'priority must be an integer'
-      end
+      Integer(prio)
+    rescue StandardError
+      raise ArgumentError, 'priority must be an integer'
     end
   end
 

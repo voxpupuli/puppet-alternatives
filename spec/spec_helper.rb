@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-$LOAD_PATH.unshift(dir, dir + 'lib', dir + '../lib')
+$LOAD_PATH.unshift(dir, "#{dir}lib", "#{dir}../lib")
 
 require 'mocha/api'
 require 'puppet'
 
-if Dir.exist?(File.expand_path('../../lib', __FILE__)) && RUBY_VERSION !~ %r{^1.9}
+if Dir.exist?(File.expand_path('../lib', __dir__)) && RUBY_VERSION !~ %r{^1.9}
   require 'coveralls'
   require 'simplecov'
   require 'simplecov-console'

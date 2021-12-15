@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Puppet::Type.type(:alternatives).provider(:dpkg) do
@@ -11,7 +13,7 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
 
   let(:stub_selections) do
     {
-      'editor'   => { mode: 'manual', path: '/usr/bin/vim.tiny' },
+      'editor' => { mode: 'manual', path: '/usr/bin/vim.tiny' },
       'aptitude' => { mode: 'auto', path: '/usr/bin/aptitude-curses' }
     }
   end
@@ -23,11 +25,11 @@ describe Puppet::Type.type(:alternatives).provider(:dpkg) do
     end
 
     describe 'returning data' do
+      subject { described_class.all }
+
       before do
         described_class.stubs(:update).with('--get-selections').returns my_fixture_read('get-selections')
       end
-
-      subject { described_class.all }
 
       it { is_expected.to be_a Hash }
       it { expect(subject['editor']).to eq(mode: 'manual', path: '/usr/bin/vim.tiny') }

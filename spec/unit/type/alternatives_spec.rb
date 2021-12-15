@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Puppet::Type.type(:alternatives) do
@@ -5,6 +7,7 @@ describe Puppet::Type.type(:alternatives) do
     it 'passes validation with an absolute path' do
       expect { described_class.new(name: 'ruby', path: '/usr/bin/ruby1.9') }.not_to raise_error
     end
+
     it 'fails validation without an absolute path' do
       expect { described_class.new(name: 'ruby', path: "The bees they're in my eyes") }.to raise_error Puppet::Error, %r{must be a fully qualified path}
     end
@@ -45,9 +48,11 @@ describe Puppet::Type.type(:alternatives) do
     it 'is equal' do
       expect(req.size).to eq(1)
     end
+
     it 'has matching source' do
       expect(req[0].source).to eq alternative_entry
     end
+
     it 'has matching target' do
       expect(req[0].target).to eq alternatives
     end

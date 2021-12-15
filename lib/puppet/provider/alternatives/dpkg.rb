@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:alternatives).provide(:dpkg) do
-  confine osfamily: [:debian, :suse]
-  defaultfor [operatingsystem: [:debian, :ubuntu], osfamily: :suse]
+  confine osfamily: %i[debian suse]
+  defaultfor [operatingsystem: %i[debian ubuntu], osfamily: :suse]
   commands update: 'update-alternatives'
 
   has_feature :mode
@@ -50,9 +52,10 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
     output = update('--display', @resource.value(:name))
     first = output.split("\n").first
 
-    if first =~ %r{auto mode}
+    case first
+    when %r{auto mode}
       'auto'
-    elsif first =~ %r{manual mode}
+    when %r{manual mode}
       'manual'
     else
       raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"
@@ -62,9 +65,10 @@ Puppet::Type.type(:alternatives).provide(:dpkg) do
   # Set the mode to manual or auto.
   # @param [Symbol] newmode Either :auto or :manual for the alternatives mode
   def mode=(newmode)
-    if newmode == :auto
+    case newmode
+    when :auto
       update('--auto', @resource.value(:name))
-    elsif newmode == :manual
+    when :manual
       # No change in value, but sets it to manual
       update('--set', name, path)
     end

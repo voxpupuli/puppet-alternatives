@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:alternative_entry).provide(:chkconfig) do
   confine osfamily: :redhat
   defaultfor osfamily: :redhat
@@ -19,14 +21,8 @@ Puppet::Type.type(:alternative_entry).provide(:chkconfig) do
   end
 
   def destroy
-    # rubocop:disable Style/RedundantBegin
-    begin
-      # rubocop::enable Style/RedundantBegin
-      update('--remove', @resource.value(:altname), @resource.value(:name))
-      # rubocop:disable Lint/HandleExceptions
-    rescue
-      # rubocop:enable Lint/HandleExceptions
-    end
+    update('--remove', @resource.value(:altname), @resource.value(:name))
+  rescue StandardError # rubocop:disable Lint/SuppressedException
   end
 
   def self.instances
@@ -46,26 +42,22 @@ Puppet::Type.type(:alternative_entry).provide(:chkconfig) do
     catalog = resources.values.first.catalog
     instances.each do |prov|
       catalog.resources.each do |item|
-        if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
-          item.provider = prov
-        end
+        item.provider = prov if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
       end
     end
   end
 
-  ALT_RPM_QUERY_REGEX = %r{^(.*\/[^\/]*) -.*priority (\w+)$}
+  ALT_RPM_QUERY_REGEX = %r{^(.*/[^/]*) -.*priority (\w+)$}.freeze # rubocop:disable Lint/ConstantDefinitionInBlock
 
   def self.query_alternative(altname)
-    begin
-      output = update('--display', altname)
-      altlink = File.readlines('/var/lib/alternatives/' + altname)[1].chomp
-      output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
-        { altname: altname, altlink: altlink, name: path, priority: priority, altlink_ro: altlink, ensure: :present }
-      end
-    rescue
-      Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
-      {}
+    output = update('--display', altname)
+    altlink = File.readlines("/var/lib/alternatives/#{altname}")[1].chomp
+    output.scan(ALT_RPM_QUERY_REGEX).map do |(path, priority)|
+      { altname: altname, altlink: altlink, name: path, priority: priority, altlink_ro: altlink, ensure: :present }
     end
+  rescue StandardError
+    Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
+    {}
   end
 
   def name=(new_name)

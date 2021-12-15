@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Puppet::Type.type(:alternatives).provider(:chkconfig) do
@@ -15,7 +17,7 @@ describe Puppet::Type.type(:alternatives).provider(:chkconfig) do
 
   let(:stub_selections) do
     {
-      'sample'  => { path: '/opt/sample1' },
+      'sample' => { path: '/opt/sample1' },
       'testcmd' => { path: '/opt/testcmd1' }
     }
   end
@@ -29,13 +31,13 @@ describe Puppet::Type.type(:alternatives).provider(:chkconfig) do
     end
 
     describe 'returning data' do
+      subject { described_class.all }
+
       before do
         described_class.stubs(:list_alternatives).returns my_fixture_alternatives
         described_class.stubs(:update).with('--display', 'sample').returns my_fixture_read('display', 'sample')
         described_class.stubs(:update).with('--display', 'testcmd').returns my_fixture_read('display', 'testcmd')
       end
-
-      subject { described_class.all }
 
       it { is_expected.to be_a Hash }
       it { expect(subject['sample']).to eq(mode: 'manual', path: '/opt/sample2') }

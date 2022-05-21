@@ -57,9 +57,9 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
     first = output.split("\n").first
 
     case first
-    when %r{auto mode} || %r{status is auto}
+    when %r{auto mode}, %r{status is auto}
       'auto'
-    when %r{manual mode} || %r{status is manual}
+    when %r{manual mode}, %r{status is manual}
       'manual'
     else
       raise Puppet::Error, "Could not determine if #{self} is in auto or manual mode"

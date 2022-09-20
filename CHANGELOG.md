@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.2.0](https://github.com/voxpupuli/puppet-alternatives/tree/v4.2.0) (2022-09-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v4.1.0...v4.2.0)
+
+**Implemented enhancements:**
+
+- Allow family to be used instead of full path [\#127](https://github.com/voxpupuli/puppet-alternatives/pull/127) ([alexjfisher](https://github.com/alexjfisher))
+
+**Fixed bugs:**
+
+- Fixes multiple expressions in case statement [\#124](https://github.com/voxpupuli/puppet-alternatives/pull/124) ([otterz](https://github.com/otterz))
+
+**Closed issues:**
+
+- Could not determine mode after upgrade to 4.1.0 [\#123](https://github.com/voxpupuli/puppet-alternatives/issues/123)
+- Using a full path for path is not always desirable. [\#71](https://github.com/voxpupuli/puppet-alternatives/issues/71)
+
+**Merged pull requests:**
+
+- Add basic acceptance tests [\#126](https://github.com/voxpupuli/puppet-alternatives/pull/126) ([jhoblitt](https://github.com/jhoblitt))
+
 ## [v4.1.0](https://github.com/voxpupuli/puppet-alternatives/tree/v4.1.0) (2022-05-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v4.0.0...v4.1.0)

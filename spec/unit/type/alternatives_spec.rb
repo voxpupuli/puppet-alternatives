@@ -13,7 +13,7 @@ describe Puppet::Type.type(:alternatives) do
     end
   end
 
-  describe 'validating the mode', pending: 'Type level validation' do
+  describe 'validating the mode' do
     it 'raises an error if the mode is auto and a path is set' do
       expect do
         described_class.new(name: 'thing', mode: 'auto', path: '/usr/bin/explode')

@@ -1,6 +1,6 @@
 # puppet-alternatives
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-alternatives.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-alternatives)
+[![Build Status](https://github.com/voxpupuli/puppet-alternatives/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-alternatives/actions?query=workflow%3ACI)
 [![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-alternatives/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-alternatives)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/alternatives.svg)](https://forge.puppet.com/puppet/alternatives)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/alternatives.svg)](https://forge.puppet.com/puppet/alternatives)
@@ -54,35 +54,47 @@ Using `puppet resource` to update an alternative
 
 Using the alternatives resource in a manifest:
 
-    class ruby::193 {
+```puppet
+class ruby_193 {
 
-      package { 'ruby1.9.3':
-        ensure => present,
-      }
+  package { 'ruby1.9.3':
+    ensure => present,
+  }
 
-      # Will also update gem, irb, rdoc, rake, etc.
-      alternatives { 'ruby':
-        path    => '/usr/bin/ruby1.9.3',
-        require => Package['ruby1.9.3'],
-      }
-    }
+  # Will also update gem, irb, rdoc, rake, etc.
+  alternatives { 'ruby':
+    path    => '/usr/bin/ruby1.9.3',
+    require => Package['ruby1.9.3'],
+  }
+}
 
-    # magic!
-    include ruby::193
+include ruby_193
+```
 
 - - -
 
 Creating a new alternative entry:
 
-    alternative_entry {'/usr/bin/gcc-4.4':
-        ensure   => present,
-        altlink  => '/usr/bin/gcc',
-        altname  => 'gcc',
-        priority => 10,
-        require  => Package['gcc-4.4-multilib'],
-    }
+```puppet
+alternative_entry { '/usr/bin/gcc-4.4':
+  ensure   => present,
+  altlink  => '/usr/bin/gcc',
+  altname  => 'gcc',
+  priority => 10,
+  require  => Package['gcc-4.4-multilib'],
+}
+```
 
 - - -
+
+On RedHat, configuring an alternative using a family instead of a full path:
+
+```puppet
+alternatives { 'java':
+  path    => 'java-1.8.0-openjdk.x86_64',
+  require => Package['java-1.8.0-openjdk'],
+}
+```
 
 This module should work on any Debian and RHEL based distribution.
 

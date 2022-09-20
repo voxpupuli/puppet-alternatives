@@ -8,10 +8,18 @@ Puppet::Type.newtype(:alternatives) do
   end
 
   newproperty(:path) do
-    desc 'The path of the desired source for the given alternative'
+    desc 'The path of the desired source for the given alternative. On RedHat, a family can be specified instead'
+
+    def insync?(is)
+      if absolute_path? should
+        is == should
+      else
+        provider.family == should
+      end
+    end
 
     validate do |path|
-      raise ArgumentError, 'path must be a fully qualified path' unless absolute_path? path
+      raise ArgumentError, 'path must be a fully qualified path' unless (absolute_path? path) || (Facter.value(:osfamily) == 'RedHat')
     end
   end
 
@@ -22,15 +30,14 @@ Puppet::Type.newtype(:alternatives) do
     newvalue('manual')
   end
 
-  # Turns out this isn't a valid hook.
-  # validate do
-  #  case self[:mode]
-  #  when 'auto'
-  #    raise ArgumentError, "Mode cannot be 'auto' if a path is given" if self[:path]
-  #  when 'manual'
-  #    raise ArgumentError, "Mode cannot be 'manual' without a path" unless self[:path]
-  #  end
-  # end
+  validate do
+    case self[:mode]
+    when :auto
+      raise Puppet::Error, "Mode cannot be 'auto' if a path is given" if self[:path]
+    when :manual
+      raise Puppet::Error, "Mode cannot be 'manual' without a path" unless self[:path]
+    end
+  end
 
   autorequire(:alternative_entry) do
     self[:path]

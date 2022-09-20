@@ -4,16 +4,36 @@ require 'spec_helper'
 
 describe Puppet::Type.type(:alternatives) do
   describe 'property `path`' do
-    it 'passes validation with an absolute path' do
-      expect { described_class.new(name: 'ruby', path: '/usr/bin/ruby1.9') }.not_to raise_error
+    context 'on Debian systems' do
+      before do
+        Facter.stubs(:value).with(:osfamily).returns('Debian')
+      end
+
+      it 'passes validation with an absolute path' do
+        expect { described_class.new(name: 'ruby', path: '/usr/bin/ruby1.9') }.not_to raise_error
+      end
+
+      it 'fails validation without an absolute path' do
+        expect { described_class.new(name: 'ruby', path: "The bees they're in my eyes") }.to raise_error Puppet::Error, %r{must be a fully qualified path}
+      end
     end
 
-    it 'fails validation without an absolute path' do
-      expect { described_class.new(name: 'ruby', path: "The bees they're in my eyes") }.to raise_error Puppet::Error, %r{must be a fully qualified path}
+    context 'on RedHat systems' do
+      before do
+        Facter.stubs(:value).with(:osfamily).returns('RedHat')
+      end
+
+      it 'passes validation with an absolute path' do
+        expect { described_class.new(name: 'java', path: '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.342.b07-1.el7_9.x86_64/jre/bin/java') }.not_to raise_error
+      end
+
+      it 'fails validation without an absolute path' do
+        expect { described_class.new(name: 'java', path: 'java-1.8.0-openjdk.x86_64') }.not_to raise_error
+      end
     end
   end
 
-  describe 'validating the mode', pending: 'Type level validation' do
+  describe 'validating the mode' do
     it 'raises an error if the mode is auto and a path is set' do
       expect do
         described_class.new(name: 'thing', mode: 'auto', path: '/usr/bin/explode')

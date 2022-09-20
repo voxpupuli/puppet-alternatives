@@ -33,10 +33,18 @@ Puppet::Type.type(:alternatives).provide(:chkconfig) do
       mode = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[1]
       path = output.match(ALT_RPM_QUERY_CURRENT_REGEX)[2]
       hash[name] = { path: path, mode: mode }
+      if (matches = output.match(%r{^#{path} - family (.+) priority \d+$}))
+        hash[name][:family] = matches[1]
+      end
     rescue StandardError
       Puppet.warning format(_('Failed to parse alternatives entry %{name}'), name: name)
     end
     hash
+  end
+
+  def family
+    name = @resource.value(:name)
+    self.class.all[name][:family]
   end
 
   # Retrieve the current path link

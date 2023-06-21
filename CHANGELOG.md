@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-alternatives/tree/v5.0.0) (2023-06-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v4.2.0...v5.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#136](https://github.com/voxpupuli/puppet-alternatives/pull/136) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add puppet 8 support [\#139](https://github.com/voxpupuli/puppet-alternatives/pull/139) ([bastelfreak](https://github.com/bastelfreak))
+- add EL9 support [\#133](https://github.com/voxpupuli/puppet-alternatives/pull/133) ([jhoblitt](https://github.com/jhoblitt))
+- Add AlmaLinux and Rocky support [\#132](https://github.com/voxpupuli/puppet-alternatives/pull/132) ([bastelfreak](https://github.com/bastelfreak))
+
+**Closed issues:**
+
+- Error: Could not autoload puppet/provider/alternatives/chkconfig [\#125](https://github.com/voxpupuli/puppet-alternatives/issues/125)
+
 ## [v4.2.0](https://github.com/voxpupuli/puppet-alternatives/tree/v4.2.0) (2022-09-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v4.1.0...v4.2.0)

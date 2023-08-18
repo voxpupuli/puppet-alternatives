@@ -42,7 +42,7 @@ Puppet::Type.type(:alternative_entry).provide(:chkconfig) do
     catalog = resources.values.first.catalog
     instances.each do |prov|
       catalog.resources.each do |item|
-        item.provider = prov if item.class.to_s == 'Puppet::Type::Alternative_entry' && item.name == prov.name && item.parameter('altlink').value == prov.altlink
+        item.provider = prov if item.instance_of?(Puppet::Type::Alternative_entry) && item.name == prov.name && item.parameter('altlink').value == prov.altlink
       end
     end
   end

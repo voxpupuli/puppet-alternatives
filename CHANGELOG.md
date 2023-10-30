@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.1.0](https://github.com/voxpupuli/puppet-alternatives/tree/v5.1.0) (2023-10-30)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v5.0.0...v5.1.0)
+
+**Implemented enhancements:**
+
+- Add Debian 12 support [\#144](https://github.com/voxpupuli/puppet-alternatives/pull/144) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v5.0.0](https://github.com/voxpupuli/puppet-alternatives/tree/v5.0.0) (2023-06-21)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v4.2.0...v5.0.0)

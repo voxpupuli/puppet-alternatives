@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.0](https://github.com/voxpupuli/puppet-alternatives/tree/v6.0.0) (2024-09-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v5.1.0...v6.0.0)
+
+**Breaking changes:**
+
+- Drop EoL Ubuntu 18.04 support [\#157](https://github.com/voxpupuli/puppet-alternatives/pull/157) ([bastelfreak](https://github.com/bastelfreak))
+- Drop EoL Debian 10 support [\#156](https://github.com/voxpupuli/puppet-alternatives/pull/156) ([bastelfreak](https://github.com/bastelfreak))
+- Drop EoL CentOS 8 support [\#155](https://github.com/voxpupuli/puppet-alternatives/pull/155) ([bastelfreak](https://github.com/bastelfreak))
+- drop support for EL7 [\#154](https://github.com/voxpupuli/puppet-alternatives/pull/154) ([jhoblitt](https://github.com/jhoblitt))
+
+**Implemented enhancements:**
+
+- switch from legacy to structured facts [\#159](https://github.com/voxpupuli/puppet-alternatives/pull/159) ([bastelfreak](https://github.com/bastelfreak))
+- Add Ubuntu 24.04 support [\#158](https://github.com/voxpupuli/puppet-alternatives/pull/158) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v5.1.0](https://github.com/voxpupuli/puppet-alternatives/tree/v5.1.0) (2023-10-30)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-alternatives/compare/v5.0.0...v5.1.0)

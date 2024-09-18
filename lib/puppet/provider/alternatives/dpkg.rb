@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 Puppet::Type.type(:alternatives).provide(:dpkg) do
-  confine osfamily: %i[debian suse]
-  defaultfor [operatingsystem: %i[debian ubuntu], osfamily: :suse]
+  confine 'os.family' => %i[debian suse]
+  defaultfor ['os.name' => %i[debian ubuntu], 'os.family' => :suse]
   commands update: 'update-alternatives'
 
   has_feature :mode

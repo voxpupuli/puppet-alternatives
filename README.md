@@ -1,11 +1,14 @@
 # puppet-alternatives
 
 [![Build Status](https://github.com/voxpupuli/puppet-alternatives/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-alternatives/actions?query=workflow%3ACI)
-[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-alternatives/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-alternatives)
-[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/alternatives.svg)](https://forge.puppet.com/puppet/alternatives)
-[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/alternatives.svg)](https://forge.puppet.com/puppet/alternatives)
-[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/alternatives.svg)](https://forge.puppet.com/puppet/alternatives)
-[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/alternatives.svg)](https://forge.puppet.com/puppet/alternatives)
+[![Release](https://github.com/voxpupuli/puppet-alternatives/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-alternatives/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/alternatives.svg)](https://forge.puppetlabs.com/puppet/alternatives)
+[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.svg)](https://www.puppetmodule.info/m/puppet-alternatives)
+[![Apache-2.0 License](https://img.shields.io/github/license/voxpupuli/puppet-alternatives.svg)](LICENSE)
+[![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 Manage alternatives symlinks.
 
@@ -97,6 +100,10 @@ alternatives { 'java':
 ```
 
 This module should work on any Debian and RHEL based distribution.
+
+## Transfer notice
+
+This module was formerly maintained by Adrien Thebo at [forge.puppet.com/adrien/alternatives/](https://forge.puppet.com/modules/adrien/alternatives/readme)
 
 ## Contact
 

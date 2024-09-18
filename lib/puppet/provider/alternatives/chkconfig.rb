@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 Puppet::Type.type(:alternatives).provide(:chkconfig) do
-  confine osfamily: :redhat
-  defaultfor osfamily: :redhat
+  confine 'os.family' => :redhat
+  defaultfor 'os.family' => :redhat
 
   commands update: 'alternatives'
 

@@ -6,7 +6,7 @@ describe Puppet::Type.type(:alternatives) do
   describe 'property `path`' do
     context 'on Debian systems' do
       before do
-        Facter.stubs(:value).with(:osfamily).returns('Debian')
+        Facter.stubs(:value).with('os.family').returns('Debian')
       end
 
       it 'passes validation with an absolute path' do
@@ -20,7 +20,7 @@ describe Puppet::Type.type(:alternatives) do
 
     context 'on RedHat systems' do
       before do
-        Facter.stubs(:value).with(:osfamily).returns('RedHat')
+        Facter.stubs(:value).with('os.family').returns('RedHat')
       end
 
       it 'passes validation with an absolute path' do

@@ -19,7 +19,7 @@ Puppet::Type.newtype(:alternatives) do
     end
 
     validate do |path|
-      raise ArgumentError, 'path must be a fully qualified path' unless (absolute_path? path) || (Facter.value(:osfamily) == 'RedHat')
+      raise ArgumentError, 'path must be a fully qualified path' unless (absolute_path? path) || (Facter.value('os.family') == 'RedHat')
     end
   end
 

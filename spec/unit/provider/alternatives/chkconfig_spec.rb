@@ -4,11 +4,11 @@ require 'spec_helper'
 
 describe Puppet::Type.type(:alternatives).provider(:chkconfig) do
   def my_fixture_alternatives
-    Dir.glob(File.join(PROJECT_ROOT, 'spec', 'fixtures', 'unit', 'provider', 'alternatives', 'chkconfig', 'alternatives', '*'))
+    Dir.glob(File.join('spec', 'fixtures', 'unit', 'provider', 'alternatives', 'chkconfig', 'alternatives', '*'))
   end
 
   def my_fixture_display(type, path)
-    File.join(PROJECT_ROOT, 'spec', 'fixtures', 'unit', 'provider', 'alternatives', 'chkconfig', type, path)
+    File.join('spec', 'fixtures', 'unit', 'provider', 'alternatives', 'chkconfig', type, path)
   end
 
   def my_fixture_read(type, path)

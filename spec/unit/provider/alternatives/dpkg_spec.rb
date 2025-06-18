@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Puppet::Type.type(:alternatives).provider(:dpkg) do
   def my_fixture(path)
-    File.join(PROJECT_ROOT, 'spec', 'fixtures', 'unit', 'provider', 'alternatives', 'dpkg', path)
+    File.join('spec', 'fixtures', 'unit', 'provider', 'alternatives', 'dpkg', path)
   end
 
   def my_fixture_read(path)

@@ -1,30 +1,25 @@
 # frozen_string_literal: true
 
-dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-$LOAD_PATH.unshift(dir, "#{dir}lib", "#{dir}../lib")
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-require 'mocha/api'
-require 'puppet'
+# puppetlabs_spec_helper will set up coverage if the env variable is set.
+# We want to do this if lib exists and it hasn't been explicitly set.
+ENV['COVERAGE'] ||= 'yes' if Dir.exist?(File.expand_path('../lib', __dir__))
 
-if Dir.exist?(File.expand_path('../lib', __dir__)) && RUBY_VERSION !~ %r{^1.9}
-  require 'coveralls'
-  require 'simplecov'
-  require 'simplecov-console'
-  SimpleCov.formatters = [
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::Console,
-    Coveralls::SimpleCov::Formatter
-  ]
-  SimpleCov.start do
-    track_files 'lib/**/*.rb'
-    add_filter '/spec'
-    add_filter '/vendor'
-    add_filter '/.vendor'
+require 'voxpupuli/test/spec_helper'
+
+RSpec.configure do |c|
+  c.facterdb_string_keys = false
+  c.mock_with :mocha
+end
+
+add_mocked_facts!
+
+if File.exist?(File.join(__dir__, 'default_module_facts.yml'))
+  facts = YAML.safe_load(File.read(File.join(__dir__, 'default_module_facts.yml')))
+  facts&.each do |name, value|
+    add_custom_fact name.to_sym, value
   end
 end
-
-PROJECT_ROOT = File.expand_path('..', File.dirname(__FILE__))
-
-RSpec.configure do |config|
-  config.mock_with :mocha
-end
+Dir['./spec/support/spec/**/*.rb'].sort.each { |f| require f }

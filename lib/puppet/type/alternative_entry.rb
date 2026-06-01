@@ -41,6 +41,11 @@ Puppet::Type.newtype(:alternative_entry) do
     end
   end
 
+  newproperty(:slavearray) do
+    desc 'An array of slave entries, multiple of 3'
+    defaultto( [] )
+  end
+
   def self.title_patterns
     [
       [

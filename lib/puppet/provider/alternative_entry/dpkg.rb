@@ -9,11 +9,30 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   mk_resource_methods
 
   def create
+    puts 'create block called'
+=begin
+COMMANDS
+       --install link name path priority [--slave link name path]...
+update-alternatives --install
+           /usr/sbin/ip6tables #generic-name/alternative-link
+           ip6tables #name-in-/etc/alternatives.d
+           /usr/sbin/ip6tables-legacy #path 
+           10 #piriority
+           --slave
+           /usr/sbin/ip6tables-restore
+           ip6tables-restore
+           /usr/sbin/ip6tables-legacy-restore
+           --slave
+           /usr/sbin/ip6tables-save
+           ip6tables-save
+           /usr/sbin/ip6tables-legacy-save
+=end
     update('--install',
            @resource.value(:altlink),
            @resource.value(:altname),
            @resource.value(:name),
-           @resource.value(:priority))
+           @resource.value(:priority),
+           *(@resource.value(:slavearray)))
   end
 
   def exists?
@@ -90,6 +109,12 @@ Puppet::Type.type(:alternative_entry).provide(:dpkg) do
   def priority=(new_priority)
     rebuild do
       @property_hash[:priority] = new_priority
+    end
+  end
+
+  def slavearray=(new_slavearray)
+    rebuild do
+      @property_hash[:priority] = new_slavearray
     end
   end
 
